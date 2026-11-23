@@ -1,7 +1,7 @@
 from langchain_groq import ChatGroq
-from src.state import EmailState
+from state import EmailState
 from langchain.messages import HumanMessage, SystemMessage
-from src.prompt import DRAFT_REPLY_SYSTEM_PROMPT
+from prompt import DRAFT_REPLY_SYSTEM_PROMPT
 import os
 from dotenv import load_dotenv
 
@@ -41,7 +41,7 @@ def format_meeting(state: EmailState) -> str:
     }
     return ", ".join(f"{k}: {v}" for k, v in parts.items() if v) or "none"
 
-def draft_reply(state: EmailState) -> EmailState:
+def draft(state: EmailState) -> EmailState:
 
     email = state["email"]
     category = state["classification"].category

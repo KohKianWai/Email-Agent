@@ -1,11 +1,11 @@
 from langchain_groq import ChatGroq
-from src.state import EmailState, EmailExtraction
+from state import EmailState, EmailExtraction
 from langchain.messages import HumanMessage, SystemMessage
 import os
 from dotenv import load_dotenv
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from src.prompt import EMAIL_EXTRACTION_SYSTEM_PROMPT
+from prompt import EMAIL_EXTRACTION_SYSTEM_PROMPT
 
 load_dotenv()
 

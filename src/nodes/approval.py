@@ -1,9 +1,9 @@
 from langgraph.types import interrupt, Command
-from src.state import EmailState, Approval
-from src.nodes.routing import needs_reminder
+from state import EmailState, Approval
+from nodes.routing import needs_reminder
 from langgraph.graph import END
 
-def approval(state: EmailState) -> Command:
+def human_approval(state: EmailState) -> Command:
     decision = interrupt({
         "sender": state["email"].sender,
         "subject": state["email"].subject,

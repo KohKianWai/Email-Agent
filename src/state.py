@@ -9,6 +9,9 @@ class Email(BaseModel):
     subject: str
     body: str
     received_at: str
+    message_id_header: str | None = None   
+    references: str | None = None      
+    reply_to: str | None = None  
 
 class EmailClassification(BaseModel):
     category: Literal["urgent", "spam", "meeting", "general"] = Field(
@@ -37,21 +40,33 @@ class MeetingDetails(BaseModel):
         description="People explicitly mentioned as meeting attendees."
     )
 
+class ReminderDetails(BaseModel):
+    title: str = Field(
+        description="Short title describing what the user needs to remember."
+    )
+    description: Optional[str] = Field(
+        default=None,
+        description="Additional details about the task or reminder."
+    )
+    due_date: Optional[str] = Field(
+        default=None,
+        description="Reminder date in YYYY-MM-DD format."
+    )
+    due_time: Optional[str] = Field(
+        default=None,
+        description="Reminder time in HH:MM 24-hour format."
+    )
+
 class EmailExtraction(BaseModel):
     summary: str = Field(description="One-sentence summary of the email.")
-    action_items: list[str] = Field(
-        default_factory=list,
-        description="Tasks or actions that need to be performed."
+    reminder: Optional[ReminderDetails] = Field(
+        default=None,
+        description="Reminder details if the email contains a task or deadline worth reminding the user about; otherwise null."
     )
     requires_reply: bool = Field(description="True if the sender expects a response.")
     meeting: Optional[MeetingDetails] = Field(
         default=None, description="Only fill for meeting requests; otherwise null."
     )
-
-class ProposedAction(BaseModel):
-    tool: Literal["draft_reply", "create_event", "create_reminder"]
-    args: dict
-    risky: bool = False
 
 class Approval(BaseModel):
     decision: Literal["approve", "edit", "reject"]
@@ -65,7 +80,6 @@ class EmailState(TypedDict):
     # Produced by nodes
     classification: EmailClassification
     extraction: EmailExtraction
-    proposed_actions: list[ProposedAction]
     draft_reply: str | None
 
     # Human-in-the-loop
@@ -74,5 +88,6 @@ class EmailState(TypedDict):
     # Output
     executed_actions: Annotated[list[str], add]  
     audit_log: Annotated[list[dict], add]         # every node appends an entry
-    status: Literal["new", "classified", "awaiting_approval", "extracted",
+    error: str
+    status: Literal["new", "classified", "awaiting_approval", "extracted", "drafted",
                     "executed", "rejected", "needs_review", "error"]

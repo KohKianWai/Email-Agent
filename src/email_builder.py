@@ -1,6 +1,6 @@
 import base64
 from email.message import EmailMessage
-from state import Email
+from .state import Email
 from email.utils import parseaddr
 
 def build_reply(email: Email, body: str) -> dict:

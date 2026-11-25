@@ -1,7 +1,7 @@
 import hashlib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-from state import Email, ReminderDetails
+from .state import Email, ReminderDetails
 
 TZ = ZoneInfo("Asia/Kuala_Lumpur")
 

@@ -1,6 +1,6 @@
-from state import EmailState
+from ..state import EmailState
 from langchain_core.runnables import RunnableConfig
-from reminder_builder import build_reminder_event
+from ..reminder_builder import build_reminder_event
 from googleapiclient.errors import HttpError
 
 def create_reminder(state: EmailState, config: RunnableConfig) -> EmailState:

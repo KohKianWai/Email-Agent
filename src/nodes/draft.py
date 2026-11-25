@@ -1,7 +1,7 @@
 from langchain_groq import ChatGroq
-from state import EmailState
+from ..state import EmailState
 from langchain.messages import HumanMessage, SystemMessage
-from prompt import DRAFT_REPLY_SYSTEM_PROMPT
+from ..prompt import DRAFT_REPLY_SYSTEM_PROMPT
 import os
 from dotenv import load_dotenv
 

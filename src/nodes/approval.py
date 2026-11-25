@@ -1,6 +1,6 @@
 from langgraph.types import interrupt, Command
-from state import EmailState, Approval
-from nodes.routing import needs_reminder
+from ..state import EmailState, Approval
+from .routing import needs_reminder
 from langgraph.graph import END
 
 def human_approval(state: EmailState) -> Command:

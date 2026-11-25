@@ -1,7 +1,7 @@
 from langchain_groq import ChatGroq
-from state import EmailState, EmailClassification
+from ..state import EmailState, EmailClassification
 from langchain.messages import HumanMessage, SystemMessage
-from prompt import EMAIL_CLASSIFY_SYSTEM_PROMPT
+from ..prompt import EMAIL_CLASSIFY_SYSTEM_PROMPT
 import os
 from dotenv import load_dotenv
 

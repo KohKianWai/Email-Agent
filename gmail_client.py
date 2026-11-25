@@ -10,8 +10,8 @@ import os
 import base64
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-TOKEN_PATH = "token.json"
+BASE_DIR = Path(__file__).resolve().parent
+TOKEN_PATH = BASE_DIR / "token.json"
 CREDS_PATH = BASE_DIR / "credentials.json"
 
 SCOPES = [

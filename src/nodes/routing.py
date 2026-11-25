@@ -1,4 +1,4 @@
-from state import EmailState
+from ..state import EmailState
 from langgraph.graph import END
 
 def route_after_classify(state: EmailState) -> str:

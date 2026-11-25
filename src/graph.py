@@ -1,12 +1,12 @@
 from langgraph.graph import StateGraph, START, END
-from state import EmailState
-from nodes.classifier import classify
-from nodes.extraction import extract
-from nodes.draft import draft
-from nodes.approval import human_approval
-from nodes.send_email import send_email
-from nodes.reminder import create_reminder
-from nodes.routing import route_after_classify, route_after_draft, route_after_extract, route_after_send
+from .state import EmailState
+from .nodes.classifier import classify
+from .nodes.extraction import extract
+from .nodes.draft import draft
+from .nodes.approval import human_approval
+from .nodes.send_email import send_email
+from .nodes.reminder import create_reminder
+from .nodes.routing import route_after_classify, route_after_draft, route_after_extract, route_after_send
 from langgraph.checkpoint.memory import InMemorySaver
 
 def build_graph(checkpointer):

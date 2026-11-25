@@ -1,6 +1,6 @@
-from state import EmailState
+from ..state import EmailState
 from langchain_core.runnables import RunnableConfig
-from email_builder import build_reply
+from ..email_builder import build_reply
 
 def send_email(state: EmailState, config: RunnableConfig):
     approval = state.get("approval")

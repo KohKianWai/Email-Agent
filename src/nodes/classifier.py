@@ -15,7 +15,7 @@ def classify(state: EmailState) -> EmailState:
         max_tokens=1000
     )
 
-    structured_llm = llm.with_structured_output(EmailClassification)
+    structured_llm = llm.with_structured_output(EmailClassification, method="json_schema")
 
     messages = [
         SystemMessage(content=EMAIL_CLASSIFY_SYSTEM_PROMPT),

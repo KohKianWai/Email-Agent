@@ -22,7 +22,7 @@ def extract(state: EmailState) -> EmailState:
             max_tokens=1000
     )
 
-    structured_llm = llm.with_structured_output(EmailExtraction)
+    structured_llm = llm.with_structured_output(EmailExtraction, method="json_schema")
 
     messages = [
         SystemMessage(content=EMAIL_EXTRACTION_SYSTEM_PROMPT.format(
@@ -45,7 +45,6 @@ def extract(state: EmailState) -> EmailState:
         "audit_log": [{
             "node": "extract",
             "summary": result.summary,
-            "has_meeting": result.meeting is not None,
-            "n_action_items": len(result.action_items),
+            "has_meeting": result.meeting is not None
         }],
     }

@@ -5,7 +5,7 @@ from langgraph.graph import END
 
 def human_approval(state: EmailState) -> Command:
     decision = interrupt({
-        "sender": state["email"].sender,
+        "from": state["email"].sender,
         "subject": state["email"].subject,
         "summary": state["extraction"].summary,
         "draft": state["draft_reply"],

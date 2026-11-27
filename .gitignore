@@ -27,6 +27,8 @@ share/python-wheels/
 MANIFEST
 credentials.json
 token.json
+poller_state.json
+test_email.py
 
 # PyInstaller
 #   Usually these files are written by a python script from a template

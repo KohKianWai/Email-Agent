@@ -8,6 +8,18 @@ from .nodes.send_email import send_email
 from .nodes.reminder import create_reminder
 from .nodes.routing import route_after_classify, route_after_draft, route_after_extract, route_after_send
 from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+
+serde = JsonPlusSerializer(
+    allowed_msgpack_modules=[
+        ("src.state", "Email"),
+        ("src.state", "EmailClassification"),
+        ("src.state", "MeetingDetails"),
+        ("src.state", "ReminderDetails"),
+        ("src.state", "EmailExtraction"),
+        ("src.state", "Approval"),
+    ]
+)
 
 def build_graph(checkpointer):
     g = StateGraph(EmailState)
@@ -33,7 +45,7 @@ def build_graph(checkpointer):
 
     return g.compile(checkpointer=checkpointer)
 
-graph = build_graph(InMemorySaver())
+graph = build_graph(InMemorySaver(serde=serde))
 # png_data = graph.get_graph().draw_mermaid_png()
 
 # with open("email_agent_graph.png", "wb") as f:

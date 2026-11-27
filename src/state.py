@@ -61,7 +61,7 @@ class EmailExtraction(BaseModel):
     summary: str = Field(description="One-sentence summary of the email.")
     reminder: Optional[ReminderDetails] = Field(
         default=None,
-        description="Reminder details if the email contains a task or deadline worth reminding the user about; otherwise null."
+        description="Reminder details if the email contains a task, meeting or deadline worth reminding the user about; otherwise null."
     )
     requires_reply: bool = Field(description="True if the sender expects a response.")
     meeting: Optional[MeetingDetails] = Field(

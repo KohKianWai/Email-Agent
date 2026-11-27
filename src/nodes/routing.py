@@ -1,4 +1,4 @@
-from ..state import EmailState
+from ..state import EmailState, ReminderDetails
 from langgraph.graph import END
 
 def route_after_classify(state: EmailState) -> str:
@@ -10,9 +10,28 @@ def route_after_classify(state: EmailState) -> str:
     else:
         return "extract"
 
-def needs_reminder(state: EmailState) -> bool:
+def reminder_from_state(state: EmailState) -> ReminderDetails | None:
     extraction = state["extraction"]
-    return extraction.meeting is not None or extraction.reminder is not None
+    email = state["email"]
+
+    if extraction.reminder and extraction.reminder.due_date:
+        return extraction.reminder
+
+    m = extraction.meeting
+    if m and m.date:
+        details = [f"Location: {m.location}" if m.location else None,
+                   f"Duration: {m.duration}" if m.duration else None,
+                   f"Attendees: {', '.join(m.attendees)}" if m.attendees else None]
+        return ReminderDetails(
+            title=f"Meeting: {email.subject}",
+            description="\n".join(d for d in details if d) or None,
+            due_date=m.date,
+            due_time=m.time,
+        )
+    return None
+
+def needs_reminder(state: EmailState) -> bool:
+    return reminder_from_state(state) is not None
 
 def route_after_extract(state: EmailState) -> str:
     if state.get("status") == "error":

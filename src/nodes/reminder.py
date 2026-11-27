@@ -1,11 +1,12 @@
 from ..state import EmailState
 from langchain_core.runnables import RunnableConfig
 from ..reminder_builder import build_reminder_event
+from .routing import reminder_from_state
 from googleapiclient.errors import HttpError
 
 def create_reminder(state: EmailState, config: RunnableConfig) -> EmailState:
     email = state["email"]
-    r = state["extraction"].reminder
+    r = reminder_from_state(state)
 
     if r is None or not r.due_date:
         return {"audit_log": [{"node": "reminder", "skipped": "no reminder or due date"}]}
